@@ -1,0 +1,44 @@
+id: XSS
+
+info:
+  name: Potential XSS Detection with "nexiz"
+  author: NEXIZ0
+  severity: medium
+  description: Detects potential XSS payloads involving the word "nexiz" in various formats.
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    extractors:
+      - type: regex
+        part: body
+        name: xss-detection
+        regex:
+          - '"nexiz""'       # "nexiz""
+          - "'nexiz''"       # 'nexiz''
+          - '<b/nexiz'       # <b/nexiz
+          - 'nexiz\\\\""'    # nexiz\""
+          - "nexiz\\\\''"    # nexiz\''
+          - '"\\\\"nexiz'    # "\"nexiz
+          - "'\\\\''nexiz"   # '\'nexiz
+
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "nexiz"
+
+      - type: regex
+        part: body
+        regex:
+          - '"nexiz""'       # "nexiz""
+          - "'nexiz''"       # 'nexiz''
+          - '<b/nexiz'       # <b/nexiz
+          - 'nexiz\\\\""'    # nexiz\""
+          - "nexiz\\\\''"    # nexiz\''
+          - '"\\\\"nexiz'    # "\"nexiz
+          - "'\\\\''nexiz"   # '\'nexiz
+
+    matchers-condition: and
