@@ -37,7 +37,7 @@ def create_urls_with_parameters(url, parameters):
 
 def run_command_in_zsh(command):
     try:
-        result = subprocess.run(["zsh", "-c", command], capture_output=True, text=True)
+        result = subprocess.run(["zsh", "-c", command], capture_output=True, text=True, errors='ignore')
         
         if result.returncode != 0:
             return False
