@@ -159,7 +159,7 @@ def main():
             url_bulk.append(generated_url)
         #print("")    
     result_file = f"run.x9"
-    with open(result_file, "w") as file:
+    with open(result_file, "a") as file:
         for res in url_bulk:
             file.write(res + '\n')
 
